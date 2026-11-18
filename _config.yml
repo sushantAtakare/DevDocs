@@ -1,0 +1,52 @@
+# DevDocs site configuration
+# Paths stay relative so the site works locally and on any host (including GitHub Pages).
+
+title: DevDocs
+description: >-
+  A clean, modern developer documentation platform for API references,
+  guides, and technical knowledge - built with Jekyll.
+author: DevDocs Team
+email: docs@devdocs.local
+
+# Base URL settings — leave blank for local development and root hosting.
+# Set url/baseurl only when deploying under a specific domain or subpath.
+url: ""
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+timezone: Asia/Kolkata
+
+# Exclude build tooling and VCS from the generated site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - README.md
+  - .gitignore
+  - .git
+
+# Include static asset directories
+include:
+  - assets
+
+# Default front matter applied to matching files
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: default
+
+# Site-wide navigation (consumed by _includes/header.html)
+navigation:
+  - title: Home
+    url: /
+  - title: Documentation
+    url: /docs/

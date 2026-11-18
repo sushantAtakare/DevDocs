@@ -1,0 +1,43 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-logo" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} home">
+      <span class="site-logo__mark" aria-hidden="true">D</span>
+      <span class="site-logo__text">{{ site.title }}</span>
+    </a>
+
+    <button
+      type="button"
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-controls="site-nav"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+      <span class="nav-toggle__bar" aria-hidden="true"></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        {% for item in site.navigation %}
+          {% assign item_url = item.url | relative_url %}
+          {% assign item_index = item.url | append: "index.html" %}
+          {% assign current = false %}
+          {% if item.url == "/" and page.url == "/" %}
+            {% assign current = true %}
+          {% elsif page.url == item.url or page.url == item_index %}
+            {% assign current = true %}
+          {% endif %}
+          <li>
+            <a
+              href="{{ item_url }}"
+              class="site-nav__link{% if current %} is-active{% endif %}"
+              {% if current %}aria-current="page"{% endif %}>
+              {{ item.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
