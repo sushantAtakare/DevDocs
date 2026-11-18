@@ -1,6 +1,8 @@
 {% assign sorted_docs = site.docs | sort: "nav_order" %}
 
 <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation">
+  {% include docs-search.html %}
+
   <p class="docs-sidebar__heading">Guides</p>
   <nav class="docs-sidebar__nav">
     <ul class="docs-sidebar__list">

@@ -1,0 +1,35 @@
+<div
+  class="docs-search"
+  id="docs-search"
+  role="search"
+  data-search-index="{{ '/assets/search-index.json' | relative_url }}">
+  <label class="docs-search__label" for="docs-search-input">Search docs</label>
+  <div class="docs-search__control">
+    <input
+      type="search"
+      id="docs-search-input"
+      class="docs-search__input"
+      placeholder="Search documentation…"
+      autocomplete="off"
+      spellcheck="false"
+      aria-controls="docs-search-results"
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-haspopup="listbox">
+    <button
+      type="button"
+      class="docs-search__clear"
+      id="docs-search-clear"
+      hidden
+      aria-label="Clear search">
+      Clear
+    </button>
+  </div>
+  <ul
+    class="docs-search__results"
+    id="docs-search-results"
+    role="listbox"
+    aria-label="Search results"
+    hidden></ul>
+  <div class="docs-search__status visually-hidden" id="docs-search-status" aria-live="polite"></div>
+</div>
