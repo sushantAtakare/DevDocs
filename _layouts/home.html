@@ -3,36 +3,76 @@ layout: default
 ---
 
 <section class="hero" aria-labelledby="hero-heading">
-  <p class="hero__eyebrow">Developer Documentation Platform</p>
-  <h1 id="hero-heading">{{ site.title }}</h1>
-  <p class="hero__lead">{{ site.description }}</p>
-  <div class="hero__actions">
-    <a class="button button--primary" href="{{ '/docs/getting-started/' | relative_url }}">Browse Documentation</a>
-    <a class="button button--ghost" href="{{ '/' | relative_url }}">Learn more</a>
+  <div class="hero__copy">
+    <p class="hero__eyebrow">Documentation platform</p>
+    <h1 id="hero-heading">Ship technical docs with the same rigor as your code.</h1>
+    <p class="hero__lead">
+      {{ site.description }}
+    </p>
+    <div class="hero__actions">
+      <a class="button button--primary" href="{{ '/docs/getting-started/' | relative_url }}">Read the docs</a>
+      <a class="button button--secondary" href="https://github.com/sushantAtakare/DevDocs" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+    </div>
   </div>
+  <aside class="hero__panel" aria-label="Platform highlights">
+    <div class="hero__panel-item">
+      <span class="hero__panel-label">Authoring</span>
+      <strong>Markdown + YAML</strong>
+      <p>Write guides as versioned files next to your product code.</p>
+    </div>
+    <div class="hero__panel-item">
+      <span class="hero__panel-label">Delivery</span>
+      <strong>Static &amp; portable</strong>
+      <p>Jekyll builds HTML you can host on GitHub Pages or any CDN.</p>
+    </div>
+    <div class="hero__panel-item">
+      <span class="hero__panel-label">Findability</span>
+      <strong>Client-side search</strong>
+      <p>A generated index keeps documentation searchable without a backend.</p>
+    </div>
+  </aside>
 </section>
 
 <section class="intro" aria-labelledby="intro-heading">
-  <h2 id="intro-heading">What is DevDocs?</h2>
-  <div class="prose">
+  <div class="section-heading">
+    <p class="section-heading__eyebrow">Overview</p>
+    <h2 id="intro-heading">What is DevDocs?</h2>
+  </div>
+  <div class="prose prose--home">
     {{ content }}
   </div>
 </section>
 
 <section class="features" aria-labelledby="features-heading">
-  <h2 id="features-heading">Why DevDocs</h2>
+  <div class="section-heading">
+    <p class="section-heading__eyebrow">Capabilities</p>
+    <h2 id="features-heading">Built for documentation teams</h2>
+    <p class="section-heading__lead">A focused set of primitives — not a CMS, not a theme marketplace.</p>
+  </div>
   <ul class="feature-grid">
     <li class="feature">
-      <h3>Markdown-first</h3>
-      <p>Write docs in Markdown with YAML front matter. No CMS required.</p>
+      <h3>Collection-based docs</h3>
+      <p>Organize guides in <code>_docs/</code> with ordered navigation, permalinks, and previous/next paging.</p>
     </li>
     <li class="feature">
-      <h3>Static &amp; fast</h3>
-      <p>Jekyll builds plain HTML, CSS, and JS — simple to host and cache.</p>
+      <h3>Readable by design</h3>
+      <p>Typography, spacing, and a restrained brand purple keep long-form technical writing comfortable.</p>
     </li>
     <li class="feature">
-      <h3>Developer-ready</h3>
-      <p>Layouts, includes, and assets stay in the repo alongside your content.</p>
+      <h3>Search that ships</h3>
+      <p>Liquid generates a JSON index at build time. Vanilla JavaScript filters it in the browser.</p>
+    </li>
+    <li class="feature">
+      <h3>CI-ready publish</h3>
+      <p>GitHub Actions builds with production <code>baseurl</code> and deploys to GitHub Pages from <code>main</code>.</p>
     </li>
   </ul>
+</section>
+
+<section class="home-cta" aria-labelledby="cta-heading">
+  <div class="home-cta__inner">
+    <h2 id="cta-heading">Start with Getting Started</h2>
+    <p>Install dependencies, run the local server, and publish your first documentation page.</p>
+    <a class="button button--primary" href="{{ '/docs/getting-started/' | relative_url }}">Open Getting Started</a>
+  </div>
 </section>

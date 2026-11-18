@@ -21,15 +21,29 @@ layout: default
 {% endif %}
 
 <div class="docs-shell">
-  <button
-    type="button"
-    class="docs-sidebar-toggle"
-    id="docs-sidebar-toggle"
-    aria-controls="docs-sidebar"
-    aria-expanded="false">
-    <span class="docs-sidebar-toggle__label">On this site</span>
-    <span class="docs-sidebar-toggle__hint" aria-hidden="true">Menu</span>
-  </button>
+  <div class="docs-toolbar">
+    <button
+      type="button"
+      class="docs-sidebar-toggle"
+      id="docs-sidebar-toggle"
+      aria-controls="docs-sidebar"
+      aria-expanded="false">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M2.5 4.25h11M2.5 8h11M2.5 11.75h11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span>Guides</span>
+    </button>
+    <p class="docs-toolbar__crumb">
+      <span>Documentation</span>
+      <span aria-hidden="true">/</span>
+      <strong>{{ page.title }}</strong>
+    </p>
+  </div>
+
+  <div
+    class="docs-backdrop"
+    id="docs-sidebar-backdrop"
+    hidden></div>
 
   <div class="docs-layout">
     {% include docs-sidebar.html %}
