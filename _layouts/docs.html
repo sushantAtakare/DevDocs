@@ -1,0 +1,70 @@
+---
+layout: default
+---
+
+{% assign sorted_docs = site.docs | sort: "nav_order" %}
+{% assign doc_count = sorted_docs | size %}
+{% assign current_index = 0 %}
+{% for doc in sorted_docs %}
+  {% if doc.url == page.url %}
+    {% assign current_index = forloop.index0 %}
+  {% endif %}
+{% endfor %}
+
+{% assign prev_index = current_index | minus: 1 %}
+{% assign next_index = current_index | plus: 1 %}
+{% if current_index > 0 %}
+  {% assign prev_doc = sorted_docs[prev_index] %}
+{% endif %}
+{% if next_index < doc_count %}
+  {% assign next_doc = sorted_docs[next_index] %}
+{% endif %}
+
+<div class="docs-shell">
+  <button
+    type="button"
+    class="docs-sidebar-toggle"
+    id="docs-sidebar-toggle"
+    aria-controls="docs-sidebar"
+    aria-expanded="false">
+    <span class="docs-sidebar-toggle__label">On this site</span>
+    <span class="docs-sidebar-toggle__hint" aria-hidden="true">Menu</span>
+  </button>
+
+  <div class="docs-layout">
+    {% include docs-sidebar.html %}
+
+    <div class="docs-main">
+      <header class="docs-header">
+        <p class="docs-header__eyebrow">Documentation</p>
+        <h1 class="docs-header__title">{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="docs-header__description">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      <article class="docs-article prose prose--docs">
+        {{ content }}
+      </article>
+
+      <nav class="docs-pager" aria-label="Documentation page">
+        <div class="docs-pager__item docs-pager__item--prev">
+          {% if prev_doc %}
+            <a class="docs-pager__link" href="{{ prev_doc.url | relative_url }}">
+              <span class="docs-pager__label">Previous</span>
+              <span class="docs-pager__title">{{ prev_doc.title }}</span>
+            </a>
+          {% endif %}
+        </div>
+        <div class="docs-pager__item docs-pager__item--next">
+          {% if next_doc %}
+            <a class="docs-pager__link" href="{{ next_doc.url | relative_url }}">
+              <span class="docs-pager__label">Next</span>
+              <span class="docs-pager__title">{{ next_doc.title }}</span>
+            </a>
+          {% endif %}
+        </div>
+      </nav>
+    </div>
+  </div>
+</div>

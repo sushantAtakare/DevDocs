@@ -25,6 +25,10 @@
           {% assign current = false %}
           {% if item.url == "/" and page.url == "/" %}
             {% assign current = true %}
+          {% elsif item.title == "Documentation" %}
+            {% if page.collection == "docs" or page.url == "/docs/" or page.url == "/docs/index.html" %}
+              {% assign current = true %}
+            {% endif %}
           {% elsif page.url == item.url or page.url == item_index %}
             {% assign current = true %}
           {% endif %}

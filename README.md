@@ -29,22 +29,24 @@ bundle exec jekyll build
 
 Generated files appear in `_site/`.
 
-## Project structure (Phase 1)
+## Project structure
 
 | Path | Role |
 |------|------|
 | `Gemfile` | Ruby gem dependencies (Jekyll) |
-| `_config.yml` | Site metadata and build defaults |
+| `_config.yml` | Site metadata, collections, and defaults |
 | `index.md` | Homepage content |
-| `docs/index.md` | Documentation landing page |
-| `_layouts/` | Page templates (`default`, `home`) |
-| `_includes/` | Reusable partials (`header`, `footer`) |
-| `assets/css/style.css` | Site styles |
-| `assets/js/main.js` | Client-side behavior |
+| `_docs/` | Documentation collection (`site.docs`) |
+| `docs/index.md` | Short docs entry page linking to Getting Started |
+| `_layouts/` | Page templates (`default`, `home`, `docs`) |
+| `_includes/` | Partials (`header`, `footer`, `docs-sidebar`) |
+| `assets/css/style.css` | Site + documentation styles |
+| `assets/js/main.js` | Header and docs sidebar toggles |
 
 ## Notes
 
 - No prebuilt Jekyll theme is used.
 - `url` and `baseurl` in `_config.yml` stay empty so asset paths work locally
   and on any host without hardcoding a GitHub Pages production URL.
-- Phase 2+ will expand documentation structure, search, and content workflows.
+- Documentation pages live in `_docs/` and are sorted by `nav_order` in the sidebar.
+- Phase 3+ may add search and richer content workflows.
