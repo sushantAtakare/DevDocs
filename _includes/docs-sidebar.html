@@ -1,0 +1,24 @@
+{% assign sorted_docs = site.docs | sort: "nav_order" %}
+
+<aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation">
+  <p class="docs-sidebar__heading">Guides</p>
+  <nav class="docs-sidebar__nav">
+    <ul class="docs-sidebar__list">
+      {% for doc in sorted_docs %}
+        {% assign is_active = false %}
+        {% if doc.url == page.url %}
+          {% assign is_active = true %}
+        {% endif %}
+        <li>
+          <a
+            href="{{ doc.url | relative_url }}"
+            class="docs-sidebar__link{% if is_active %} is-active{% endif %}"
+            {% if is_active %}aria-current="page"{% endif %}>
+            <span class="docs-sidebar__order" aria-hidden="true">{{ doc.nav_order }}</span>
+            <span class="docs-sidebar__title">{{ doc.title }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</aside>

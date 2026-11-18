@@ -1,38 +1,49 @@
 /**
- * DevDocs — Phase 1 client script
- * Mobile nav toggle and progressive enhancement hooks.
+ * DevDocs — client script
+ * Site header nav + documentation sidebar toggles.
  */
 (function () {
   "use strict";
 
-  var toggle = document.getElementById("nav-toggle");
-  var nav = document.getElementById("site-nav");
+  function bindToggle(toggleId, panelId) {
+    var toggle = document.getElementById(toggleId);
+    var panel = document.getElementById(panelId);
 
-  if (!toggle || !nav) {
-    return;
-  }
-
-  function setOpen(isOpen) {
-    toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    nav.classList.toggle("is-open", isOpen);
-  }
-
-  toggle.addEventListener("click", function () {
-    var expanded = toggle.getAttribute("aria-expanded") === "true";
-    setOpen(!expanded);
-  });
-
-  // Close the mobile menu after activating a nav link
-  nav.addEventListener("click", function (event) {
-    if (event.target.closest("a")) {
-      setOpen(false);
+    if (!toggle || !panel) {
+      return null;
     }
-  });
 
-  // Close on Escape for keyboard users
+    function setOpen(isOpen) {
+      toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      panel.classList.toggle("is-open", isOpen);
+    }
+
+    toggle.addEventListener("click", function () {
+      var expanded = toggle.getAttribute("aria-expanded") === "true";
+      setOpen(!expanded);
+    });
+
+    panel.addEventListener("click", function (event) {
+      if (event.target.closest("a")) {
+        setOpen(false);
+      }
+    });
+
+    return { setOpen: setOpen };
+  }
+
+  var siteNav = bindToggle("nav-toggle", "site-nav");
+  var docsSidebar = bindToggle("docs-sidebar-toggle", "docs-sidebar");
+
   document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") {
-      setOpen(false);
+    if (event.key !== "Escape") {
+      return;
+    }
+    if (siteNav) {
+      siteNav.setOpen(false);
+    }
+    if (docsSidebar) {
+      docsSidebar.setOpen(false);
     }
   });
 })();

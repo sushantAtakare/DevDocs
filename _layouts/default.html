@@ -7,11 +7,11 @@
   <meta name="description" content="{{ page.description | default: site.description | escape }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
-<body>
+<body class="{% if page.collection %}collection-{{ page.collection }} {% endif %}layout-{{ page.layout | default: 'default' }}">
   {% include header.html %}
 
   <main id="main-content" class="site-main" tabindex="-1">
-    <div class="container">
+    <div class="container{% if page.collection == 'docs' %} container--docs{% endif %}">
       {{ content }}
     </div>
   </main>
