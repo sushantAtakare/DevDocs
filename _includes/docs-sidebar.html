@@ -1,10 +1,23 @@
 {% assign sorted_docs = site.docs | sort: "nav_order" %}
 
 <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation">
+  <div class="docs-sidebar__top">
+    <p class="docs-sidebar__brand">DevDocs</p>
+    <button
+      type="button"
+      class="docs-sidebar__close"
+      id="docs-sidebar-close"
+      aria-label="Close guides menu">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
   {% include docs-search.html %}
 
-  <p class="docs-sidebar__heading">Guides</p>
-  <nav class="docs-sidebar__nav">
+  <p class="docs-sidebar__heading" id="docs-guides-heading">Guides</p>
+  <nav class="docs-sidebar__nav" aria-labelledby="docs-guides-heading">
     <ul class="docs-sidebar__list">
       {% for doc in sorted_docs %}
         {% assign is_active = false %}

@@ -3,13 +3,19 @@
   id="docs-search"
   role="search"
   data-search-index="{{ '/assets/search-index.json' | relative_url }}">
-  <label class="docs-search__label" for="docs-search-input">Search docs</label>
+  <label class="docs-search__label" for="docs-search-input">Search documentation</label>
   <div class="docs-search__control">
+    <span class="docs-search__icon" aria-hidden="true">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+        <circle cx="7" cy="7" r="4.25" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M10.5 10.5 13.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
     <input
       type="search"
       id="docs-search-input"
       class="docs-search__input"
-      placeholder="Search documentation…"
+      placeholder="Search docs…"
       autocomplete="off"
       spellcheck="false"
       aria-controls="docs-search-results"
