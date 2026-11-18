@@ -1,5 +1,6 @@
 # DevDocs site configuration
-# Paths stay relative so the site works locally and on any host (including GitHub Pages).
+# Production values target the GitHub Pages project site.
+# For root-local serving, use: bundle exec jekyll serve --config _config.yml,_config.local.yml
 
 title: DevDocs
 description: >-
@@ -8,10 +9,10 @@ description: >-
 author: DevDocs Team
 email: docs@devdocs.local
 
-# Base URL settings - leave blank for local development and root hosting.
-# Set url/baseurl only when deploying under a specific domain or subpath.
-url: ""
-baseurl: ""
+# GitHub Pages (project site): https://sushantAtakare.github.io/DevDocs/
+# Templates must use the relative_url filter so assets and links respect baseurl.
+url: "https://sushantAtakare.github.io"
+baseurl: "/DevDocs"
 
 # Build settings
 markdown: kramdown
@@ -35,6 +36,7 @@ exclude:
   - CONTRIBUTING.md
   - .gitignore
   - .git
+  - .github
 
 # Include static asset directories
 include:

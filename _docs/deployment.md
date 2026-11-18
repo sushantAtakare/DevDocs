@@ -16,21 +16,20 @@ bundle exec jekyll build
 The deployable artifact is the `_site/` directory. Everything required for the
 browser - HTML, CSS, and JavaScript - is inside that folder.
 
-## Set URL options only when you know the host
+## URL options for this repository
 
-In `_config.yml`:
+DevDocs is a GitHub Pages **project** site. Production `_config.yml` uses:
 
 ```yaml
-url: ""        # e.g. https://example.com
-baseurl: ""    # e.g. /DevDocs for project sites
+url: "https://sushantAtakare.github.io"
+baseurl: "/DevDocs"
 ```
 
 Rules of thumb:
 
-- **Apex or custom domain at root** - `baseurl` stays empty; set `url` to the
-  canonical origin if you need absolute URLs.
-- **GitHub Pages project site** - set `baseurl: /<repository-name>` so
+- **GitHub Pages project site** - `baseurl` is `/<repository-name>` so
   `relative_url` prefixes asset and doc links correctly.
+- **Local root preview** - use `_config.local.yml` to clear `url` / `baseurl`.
 - **Do not hardcode** production hosts inside layouts. Prefer `relative_url`.
 
 Restart `jekyll serve` after changing these values and click through CSS and
@@ -40,16 +39,18 @@ sidebar links before deploying.
 
 | Host | What to upload / publish |
 |------|--------------------------|
-| GitHub Pages | Push the repo; use Actions or `gh-pages` branch with `_site` |
+| GitHub Pages (this repo) | `.github/workflows/deploy.yml` builds on CI and deploys from `main` |
 | Netlify / Cloudflare Pages | Build command `bundle exec jekyll build`, publish `_site` |
 | Any static file host | Upload the contents of `_site` to the web root or subpath |
 
-Example Netlify-style settings:
+Primary production path for DevDocs:
 
-```text
-Build command: bundle exec jekyll build
-Publish directory: _site
-```
+1. Merge to `main`.
+2. GitHub Actions runs **Build and Deploy**.
+3. The deploy job publishes the Pages artifact to
+   https://sushantAtakare.github.io/DevDocs/
+
+Repository **Settings → Pages** must use **GitHub Actions** as the source.
 
 ## Cache and headers
 

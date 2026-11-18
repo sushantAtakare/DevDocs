@@ -61,10 +61,13 @@ Useful options:
 
 ## Configuration you should not hardcode
 
-Leave `url` and `baseurl` empty in `_config.yml` while developing locally.
-Templates use the `relative_url` filter so CSS, JS, and doc links stay correct
-when you later set a production `baseurl` (for example a GitHub Pages project
-site under `/DevDocs`).
+Production `_config.yml` sets `baseurl: "/DevDocs"` for GitHub Pages. Templates
+use the `relative_url` filter so CSS, JS, and doc links stay correct under that
+prefix. For root-local serving, run:
+
+```bash
+bundle exec jekyll serve --config _config.yml,_config.local.yml
+```
 
 ## Troubleshooting
 
