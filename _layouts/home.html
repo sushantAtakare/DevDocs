@@ -1,0 +1,38 @@
+---
+layout: default
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <p class="hero__eyebrow">Developer Documentation Platform</p>
+  <h1 id="hero-heading">{{ site.title }}</h1>
+  <p class="hero__lead">{{ site.description }}</p>
+  <div class="hero__actions">
+    <a class="button button--primary" href="{{ '/docs/' | relative_url }}">Browse Documentation</a>
+    <a class="button button--ghost" href="{{ '/' | relative_url }}">Learn more</a>
+  </div>
+</section>
+
+<section class="intro" aria-labelledby="intro-heading">
+  <h2 id="intro-heading">What is DevDocs?</h2>
+  <div class="prose">
+    {{ content }}
+  </div>
+</section>
+
+<section class="features" aria-labelledby="features-heading">
+  <h2 id="features-heading">Why DevDocs</h2>
+  <ul class="feature-grid">
+    <li class="feature">
+      <h3>Markdown-first</h3>
+      <p>Write docs in Markdown with YAML front matter. No CMS required.</p>
+    </li>
+    <li class="feature">
+      <h3>Static &amp; fast</h3>
+      <p>Jekyll builds plain HTML, CSS, and JS — simple to host and cache.</p>
+    </li>
+    <li class="feature">
+      <h3>Developer-ready</h3>
+      <p>Layouts, includes, and assets stay in the repo alongside your content.</p>
+    </li>
+  </ul>
+</section>
