@@ -68,27 +68,49 @@ jobs:
             test -f "_site/docs/${page}/index.html"
           done
 
-          ruby -e '
-            require "json"
-            path = "_site/assets/search-index.json"
-            data = JSON.parse(File.read(path))
-            abort("search index must be an array") unless data.is_a?(Array)
-            abort("expected 8 docs in search index, got #{data.size}") unless data.size == 8
-            data.each do |entry|
-              %w[title description url content].each do |key|
-                abort("missing #{key} in search index entry") unless entry.key?(key)
-              end
-              unless entry["url"].to_s.start_with?("/DevDocs/")
-                abort("search URL missing baseurl: #{entry["url"].inspect}")
-              end
+          ruby <<'RUBY'
+          require "json"
+
+          abort("_site/index.html is missing") unless File.file?("_site/index.html")
+
+          html = File.read("_site/index.html")
+          css_href = 'href="/DevDocs/assets/css/style.css"'
+          js_src = 'src="/DevDocs/assets/js/main.js"'
+          abort("CSS href missing /DevDocs/ baseurl") unless html.include?(css_href)
+          abort("JS src missing /DevDocs/ baseurl") unless html.include?(js_src)
+
+          %w[
+            getting-started
+            installation
+            project-structure
+            architecture
+            jekyll-basics
+            liquid-templates
+            yaml-front-matter
+            deployment
+          ].each do |page|
+            path = "_site/docs/#{page}/index.html"
+            abort("missing documentation page: #{path}") unless File.file?(path)
+          end
+
+          index_path = "_site/assets/search-index.json"
+          abort("missing search index: #{index_path}") unless File.file?(index_path)
+
+          data = JSON.parse(File.read(index_path))
+          abort("search index must be an array") unless data.is_a?(Array)
+          abort("expected 8 docs in search index, got #{data.size}") unless data.size == 8
+
+          data.each do |entry|
+            %w[title description url content].each do |key|
+              abort("missing #{key} in search index entry") unless entry.key?(key)
             end
-            html = File.read("_site/index.html")
-            css_href = "href=\"/DevDocs/assets/css/style.css\""
-            js_src = "src=\"/DevDocs/assets/js/main.js\""
-            abort("CSS href missing baseurl") unless html.include?(css_href)
-            abort("JS src missing baseurl") unless html.include?(js_src)
-            puts "Validation passed: _site, 8 docs, search index, baseurl paths"
-          '
+            unless entry["url"].to_s.start_with?("/DevDocs/")
+              abort("search URL missing baseurl: #{entry["url"].inspect}")
+            end
+          end
+
+          puts "Validation passed: _site, 8 docs, search index, baseurl paths"
+          RUBY
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
