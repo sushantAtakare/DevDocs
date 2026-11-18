@@ -83,8 +83,10 @@ jobs:
               end
             end
             html = File.read("_site/index.html")
-            abort("CSS href missing baseurl") unless html.include?('href="/DevDocs/assets/css/style.css"')
-            abort("JS src missing baseurl") unless html.include?('src="/DevDocs/assets/js/main.js"')
+            css_href = "href=\"/DevDocs/assets/css/style.css\""
+            js_src = "src=\"/DevDocs/assets/js/main.js\""
+            abort("CSS href missing baseurl") unless html.include?(css_href)
+            abort("JS src missing baseurl") unless html.include?(js_src)
             puts "Validation passed: _site, 8 docs, search index, baseurl paths"
           '
 
