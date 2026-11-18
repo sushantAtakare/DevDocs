@@ -1,0 +1,108 @@
+# Build DevDocs with Jekyll and deploy to GitHub Pages from main.
+# Deploy runs only on pushes to main. Other pushes/PRs build and validate.
+
+name: Build and Deploy
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Least privilege: read contents everywhere; Pages write only needed for deploy.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent overlapping production deploys from canceling a running deploy mid-flight.
+concurrency:
+  group: pages-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4.12"
+          bundler-cache: true
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Validate generated site
+        run: |
+          set -euo pipefail
+
+          test -d _site
+          test -f _site/index.html
+          test -f _site/assets/css/style.css
+          test -f _site/assets/js/main.js
+          test -f _site/assets/js/search.js
+          test -f _site/assets/search-index.json
+
+          for page in \
+            getting-started \
+            installation \
+            project-structure \
+            architecture \
+            jekyll-basics \
+            liquid-templates \
+            yaml-front-matter \
+            deployment
+          do
+            test -f "_site/docs/${page}/index.html"
+          done
+
+          ruby -e '
+            require "json"
+            path = "_site/assets/search-index.json"
+            data = JSON.parse(File.read(path))
+            abort("search index must be an array") unless data.is_a?(Array)
+            abort("expected 8 docs in search index, got #{data.size}") unless data.size == 8
+            data.each do |entry|
+              %w[title description url content].each do |key|
+                abort("missing #{key} in search index entry") unless entry.key?(key)
+              end
+              unless entry["url"].to_s.start_with?("/DevDocs/")
+                abort("search URL missing baseurl: #{entry["url"].inspect}")
+              end
+            end
+            html = File.read("_site/index.html")
+            abort("CSS href missing baseurl") unless html.include?('href="/DevDocs/assets/css/style.css"')
+            abort("JS src missing baseurl") unless html.include?('src="/DevDocs/assets/js/main.js"')
+            puts "Validation passed: _site, 8 docs, search index, baseurl paths"
+          '
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    # Production deploy only from the main branch on push (not PRs / other branches).
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

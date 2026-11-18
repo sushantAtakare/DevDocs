@@ -64,7 +64,8 @@ matter plus Markdown is enough.
 ## Design constraints carried from Phase 1
 
 - No third-party Jekyll theme
-- Empty `url` / `baseurl` by default
+- Production `url` / `baseurl` target GitHub Pages (`/DevDocs`); local root
+  serving uses `_config.local.yml`
 - Homepage (`layout: home`) remains separate from the docs shell
 - Visual language (light surface, dark header) is shared via `style.css`
 
